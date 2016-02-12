@@ -27,10 +27,7 @@ def next_possible_moves(current, board, boardsize):
 def warnsdorff(current, board, boardsize):
     moves = []
     for move in next_possible_moves(current, board, boardsize):
-        temp = board[move]
-        board[move] = -1
         moves.append((move, len(next_possible_moves(move, board, boardsize))))
-        board[move] = temp
     return sorted(moves, key=lambda x:x[1])
 
 def knight_tour(currentpos, board, count):
