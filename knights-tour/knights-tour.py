@@ -31,25 +31,19 @@ def warnsdorff(current, board, boardsize):
         board[move] = -1
         moves.append((move, len(next_possible_moves(move, board, boardsize))))
         board[move] = temp
-    return sorted(moves, key=lambda x:x[1])
+    return min(moves, key=lambda x:x[1])
 
 def knight_tour(currentpos, board, count):
-    if count >= boardsize[X] * boardsize[Y]:
-        return True
-
-    for d in offsets:
-        newpos = currentpos[X]+d[X], currentpos[Y]+d[Y]
-        if is_legal(newpos, board, boardsize):
-
+    current = start
+    while count < len(board):
+        newpos = warnsdorff(current, board, boardsize)
+        if newpos:
             count += 1
-            board[newpos] = count
-
-            if knight_tour(newpos, board, count):
-                return True
-            else:
-                board[newpos] = 0
-                count -= 1
-    return False
+            board[newpos[0]] = count
+            current = newpos[0]
+        else:
+            return False
+    return True
 
 
 if __name__ == '__main__':
@@ -62,19 +56,7 @@ if __name__ == '__main__':
     count = 1
     board[start] = count
 
-    current = start
-    while count < len(board):
-        p = warnsdorff(current, board, boardsize)
-        p = p[0][0]
-        count += 1
-        board[p] = count
-        current = p
-
-    print "Done!"
-    print board_string(board, boardsize)
-
-
-    #  if knight_tour(start, board, count):
-        #  print board_string(board, boardsize)
-    #  else:
-        #  print "No knight's tour"
+    if knight_tour(start, board, count):
+        print board_string(board, boardsize)
+    else:
+        print "No knight's tour"
