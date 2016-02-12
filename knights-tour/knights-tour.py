@@ -31,7 +31,7 @@ def warnsdorff(current, board, boardsize):
         board[move] = -1
         moves.append((move, len(next_possible_moves(move, board, boardsize))))
         board[move] = temp
-    return min(moves, key=lambda x:x[1])
+    return sorted(moves, key=lambda x:x[1])
 
 def knight_tour(currentpos, board, count):
     current = start
@@ -39,8 +39,8 @@ def knight_tour(currentpos, board, count):
         newpos = warnsdorff(current, board, boardsize)
         if newpos:
             count += 1
-            board[newpos[0]] = count
-            current = newpos[0]
+            board[newpos[0][0]] = count
+            current = newpos[0][0]
         else:
             return False
     return True
