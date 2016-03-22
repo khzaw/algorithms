@@ -28,7 +28,7 @@ for g in xrange(t):
         nodes.append(Node(i))
         graph[i] = -1
 
-    for _ in range(m):
+    for _ in xrange(m):
         m1, m2  = map(int, raw_input().strip().split(' '))
         nodes[m1-1].adjacentNodes.append(nodes[m2-1])
         nodes[m2-1].adjacentNodes.append(nodes[m1-1])
