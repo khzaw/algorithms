@@ -3,12 +3,12 @@
 n, m = map(int, raw_input().strip().split(' '))
 denom = map(int, raw_input().strip().split(' '))
 
-def coin_change(given_denoms, p):
-    given_denoms = sorted(given_denoms)
-    c = [0]*(p+1)
-    for i in xrange(1, p+1):
-        denoms = min(c[i-d] for d in given_denoms if d <= i)
-        c[i] = denoms + 1
-    return c[p]
+def coin_change(coins, amount):
+    ways = [0] * (amount + 1)
+    ways[0] = 1
+    for coin in coins:
+        for j in xrange(coin, amount + 1):
+            ways[j] += ways[j - coin]
+    return ways[amount]
 
 print coin_change(denom, n)
