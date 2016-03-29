@@ -8,6 +8,10 @@ for a0 in xrange(t):
   b = int(raw_input().strip())
 
   end = set()
-  for i in product([a, b], repeat=(n-1)):
-    end.add(reduce(int.__add__, i))
-  print ' '.join(str(x) for x in sorted(end))
+  a, b = sorted([a, b])
+  if a == b:
+    print (n-1)*a
+  else:
+    for i in xrange((n-1)*a, ((n-1)*b) + 1, (b-a)):
+      end.add(i)
+    print ' '.join(str(x) for x in sorted(end))
