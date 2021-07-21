@@ -23,4 +23,4 @@ class Solution:
             if compliment not in mydict:
                 mydict[v] = i
             else:
-                return [mydict[v], i]
+                return [mydict[complement], i]
