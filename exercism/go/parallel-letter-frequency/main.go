@@ -1,0 +1,4 @@
+package letter
+
+func main() {
+}
