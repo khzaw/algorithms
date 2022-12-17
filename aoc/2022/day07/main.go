@@ -5,40 +5,83 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 )
 
 func main() {
-	_ = ReadFileTree("./input.txt")
+	tree, _ := ReadFileTree("./input.txt")
+
+	var MAX_DISK_SPACE int = 70000000
+	var UPDATE int = 30000000
+
+	total := 0
+	m := tree.GetMap()
+	for _, v := range m {
+		if v <= 100000 {
+			total += v
+		}
+	}
+	fmt.Println("Part One: ", total)
+
+	totalSpace := m["/"]
+	// fmt.Println("root space: ", totalSpace)
+
+	remaining := MAX_DISK_SPACE - totalSpace
+	// fmt.Println("remaining: ", remaining)
+
+	needForUpdate := UPDATE - remaining
+	// fmt.Println("needForUpdate: ", needForUpdate)
+
+	smallest := totalSpace
+	for _, v := range m {
+		if v >= needForUpdate && v < smallest {
+			smallest = v
+		}
+	}
+
+	fmt.Println("Part Two: ", smallest)
 }
 
-func ReadFileTree(p string) error {
+func ReadFileTree(p string) (*Tree, error) {
 	f, err := os.Open(p)
-	if err != nil {
-		return fmt.Errorf("open file error: %w", err)
-	}
 	defer f.Close()
 
+	if err != nil {
+		return nil, fmt.Errorf("open file error: %w", err)
+	}
+
 	rd := bufio.NewReader(f)
+	tree := NewTree()
+
 	for {
 		line, err := rd.ReadString('\n')
 		if err != nil {
 			if err == io.EOF {
 				break
 			}
-			return fmt.Errorf("read file line error: %w", err)
+			return nil, fmt.Errorf("read file line error: %w", err)
 		}
-		ParseTree(line, NewNode("/", 0, []Node{}))
+		ParseTree(strings.TrimRight(line, "\n"), tree)
 	}
-	return nil
+	return tree, nil
 }
 
-func ParseTree(line string, node *Node) {
-	if line[0] == '$' {
-		ParseCommand(line[2:], node)
+func ParseTree(line string, tree *Tree) {
+	if line[0] == '$' && line[2:4] == "cd" {
+		tree.ProcessCD(line[4:])
+	} else if line[0] == '$' && line[2:4] == "ls" {
+		// continue
+	} else if line[0:3] == "dir" {
+		tree.ProcessDir(line[4:])
+	} else {
+		l := strings.Split(line, " ")
+		tree.ProcessFile(toInt(l[0]))
 	}
+
 }
 
-func ParseCommand(command string, node *Node) {
-	c := strings.Split(command, " ")
+func toInt(s string) int {
+	d, _ := strconv.Atoi(s)
+	return d
 }
