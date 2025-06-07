@@ -1,3 +1,6 @@
+# pyright: basic
+
+
 class Solution:
     def threeSum(self, nums):
         """
@@ -8,13 +11,12 @@ class Solution:
         nums.sort()
 
         for i in range(len(nums) - 2):
-
-            if i > 0 and nums[i] == nums[i-1]:
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
 
             left, right = i + 1, len(nums) - 1
             while left < right:
-                if left > i + 1 and nums[left] == nums[left-1]:
+                if left > i + 1 and nums[left] == nums[left - 1]:
                     left += 1
                     continue
                 s = nums[i] + nums[left] + nums[right]

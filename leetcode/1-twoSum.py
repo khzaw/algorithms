@@ -1,3 +1,5 @@
+from typing import List
+
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         """
@@ -23,4 +25,5 @@ class Solution:
             if compliment not in mydict:
                 mydict[v] = i
             else:
-                return [mydict[complement], i]
+                return [mydict[compliment], i]
+        return []

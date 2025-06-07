@@ -1,7 +1,9 @@
+from typing import Optional
+
 class ListNode:
-    def __init__(self, x):
+    def __init__(self, x:int) -> None:
         self.val = x
-        self.next = None
+        self.next: Optional[ListNode] = None
 
 
 class Solution:
