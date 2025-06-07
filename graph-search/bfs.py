@@ -1,5 +1,8 @@
+# pyright: basic
+
 from node import Node
 from collections import deque
+
 
 def breadth_first_search(root, search_value):
     q = deque([root])
@@ -18,7 +21,8 @@ def breadth_first_search(root, search_value):
 
     return False
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     node0 = Node(0)
     node1 = Node(1)
     node2 = Node(2)

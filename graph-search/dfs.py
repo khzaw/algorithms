@@ -1,4 +1,7 @@
+# pyright: basic
+
 from node import Node
+
 
 def depth_first_search(root, search_value):
     stack = [root]
@@ -18,7 +21,7 @@ def depth_first_search(root, search_value):
     return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     node0 = Node(0)
     node1 = Node(1)
     node2 = Node(2)
